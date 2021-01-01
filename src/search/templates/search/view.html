@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load class_name %}
+{% block content %}
+
+<div>
+    <h3>{{ count }} results for <b>{{ query }}</b></h3>
+</div>
+        
+{% for object in object_list %}
+    
+    {% with object|class_name as klass %}
+        {% if klass == 'Post' %}
+            <div>
+                Blog post: <a href='{{ object.get_absolute_url }}'>{{ object.title }}</a>
+            </div>
+        {% elif klass == 'Lesson' %}
+            <div>
+                Lesson Item: <a href='{{ object.get_absolute_url }}'>{{ object.title }}</a>
+            </div>
+        {% elif klass == 'Profile' %}
+            <div>
+                Lesson Item: <a href='{{ object.get_absolute_url }}'>{{ object.title }}</a>
+            </div>
+        {% else %}
+            <div>
+                <a href='{{ object.get_absolute_url }}'>{{ object }} | {{ object|class_name }}</a>
+            </div>
+        {% endif %}
+    {% endwith %}
+
+{% empty %}
+
+<div class='row'>
+    <form method='GET' class='' action='.'>
+        <div class="input-group form-group-no-border mx-auto" style="margin-bottom: 0px; font-size: 32px;">
+            <input type="text" name="q" placeholder="Type a word and press enter">
+        </div>
+    </form>
+</div>
+
+{% endfor %}
+{% endblock content %}
